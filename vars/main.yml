@@ -1,0 +1,5 @@
+---
+
+# Required Jenkins plugins
+ansible_jenkins_backup_plugin_list:
+  - "exclusive-execution"

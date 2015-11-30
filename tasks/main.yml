@@ -1,0 +1,34 @@
+---
+
+
+
+- name: Ensure the needed dirs are present and Jenkins is priviledged
+  file:
+    path: "{{ item }}"
+    owner: "{{ ansible_jenkins_backup_jenkins_user }}"
+    group: "{{ ansible_jenkins_backup_jenkins_user }}"
+    mode: "{{ ansible_jenkins_backup_jenkins_mode }}"
+    state: directory
+  with_items:
+    - "{{ ansible_jenkins_backup_script_dir }}"
+    - "{{ ansible_jenkins_backup_dir }}"
+  tags: [ "config" ]
+
+- name: Copy CI script files
+  template:
+    src: "{{ item }}"
+    dest: "{{ ansible_jenkins_backup_script_dir }}/"
+    owner: "{{ ansible_jenkins_backup_jenkins_user }}"
+    group: "{{ ansible_jenkins_backup_jenkins_user }}"
+    mode: "u=rwx,g=rx,o=r"
+  with_items:
+    - "scripts/jenkins-config-backup.sh"
+  tags: [ "config" ]
+
+- name: Ensure required plugins are installed
+  command: >
+    java -jar {{ jenkins_cli_jar_location }} -s {{ jenkins_url }}/ install-plugin {{ item }}
+    creates={{ jenkins_plugin_location }}/{{ item }}.jpi
+  with_items: ansible_jenkins_backup_plugin_list
+  notify: restart jenkins
+  tags: [ "config" ]

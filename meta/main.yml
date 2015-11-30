@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Simon Dietschi
+  description: Ansible role for Jenkins backup
+  license: MIT
+  min_ansible_version: 1.8
+  platforms:
+    - name: EL
+      versions:
+        - 7
+        - 6
+  categories:
+    - development
+dependencies: []

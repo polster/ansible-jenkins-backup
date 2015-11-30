@@ -1,0 +1,20 @@
+# Default varaibles, may be overridden by depending roles.
+---
+
+# The Jenkins user
+ansible_jenkins_backup_jenkins_user: "jenkins"
+
+# The directory and file mode
+ansible_jenkins_backup_jenkins_mode: "u=rwx,g=rx,o="
+
+# The Jenkins home
+ansible_jenkins_backup_jenkins_home: "/var/lib/jenkins"
+
+# The default dir for the scripts
+ansible_jenkins_backup_script_dir: "{{ ansible_jenkins_backup_jenkins_home }}/scripts/"
+
+# The default dir for all the backup files
+ansible_jenkins_backup_dir: "{{ ansible_jenkins_backup_jenkins_home }}/backup/config"
+
+# The default file name for any backup
+ansible_jenkins_backup_file_name: "jenkins-config-backup_`date +\"%Y%m%d%H%M%S\"`.tar.gz"
